@@ -118,11 +118,11 @@ task :deploy => :environment do
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
     
-    invoke :'rails:assets_precompile'
+    #invoke :'rails:assets_precompile'
     #invoke :'rake db:mongoid:create_indexes RAILS_ENV=production'
-    to :launch do
-      queue "touch #{deploy_to}/tmp/restart.txt"
-    end
+    #to :launch do
+     # queue "touch #{deploy_to}/tmp/restart.txt"
+    #end
   end
 end
 
