@@ -6,6 +6,8 @@ gem 'rails', '4.0.0'
 gem "mongoid", github: 'mongoid/mongoid', ref: '11e45e5a30a45458b83db99ab6c9d9ccc337e66f'
 gem 'mongoid_auto_increment_id', "0.6.1"
 
+gem 'execjs'
+gem 'therubyracer', :platforms => :ruby
 
 gem "bson_ext","1.8.0"
 
