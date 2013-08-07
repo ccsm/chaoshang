@@ -82,6 +82,9 @@ GEM
     fabrication (2.7.2)
     ffi (1.9.0)
     formatador (0.2.4)
+    gon (4.1.1)
+      actionpack (>= 2.3.0)
+      json
     guard (1.8.2)
       formatador (>= 0.2.4)
       listen (>= 1.0.0)
@@ -254,6 +257,7 @@ DEPENDENCIES
   devise
   execjs
   fabrication
+  gon
   guard-rspec
   haml-rails
   jbuilder (~> 1.2)

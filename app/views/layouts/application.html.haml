@@ -1,0 +1,34 @@
+!!!
+%html
+  %head
+    %title 超商网管理页面
+    %meta{:name=>"viewport",:content=>"width=device-width,initial-scale=1.0"}
+    = stylesheet_link_tag "application", controller_name, :media=>"all"
+    = javascript_include_tag "application", controller_name
+    = include_gon
+    = csrf_meta_tags
+    :sass
+      body
+        padding-top: 60px
+        padding-bottom: 40px
+      .sidebar-nav
+        padding: 9px 0px
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          %button{:type=>"button",:class=>"btn btn-navbar","data-toggle"=>"collapse","data-target"=>".nav-collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand 开8
+          .nav-collapse.collapse
+            %p.navbar-text.pull-right
+              =# link_to("退出",destroy_admin_user_session_path,:class=>"navbar-link",:method=>"DELETE")
+            =# render_menu_items('drivers', 'passengers', 'partners', 'feedbacks', 'stations', 'lines', 'orders', 'contracts', 'versions', 'payments', 'documentation')
+    .container-fluid
+      .row-fluid
+        .span2
+          =# render 'sidebar'
+        .span10
+          = yield

@@ -1,0 +1,18 @@
+!!!
+%html
+  %head
+    %title 超商网             
+    = stylesheet_link_tag "application", :media => "all"
+  %body#login
+    #login-wrapper
+      #login-top
+        %h2 超商网管理系统
+      #login-content
+        - unless flash[:alert].blank?   
+          .alert
+            %strong 警告       
+            = flash[:alert]    
+        - unless flash[:notice].blank?  
+          .alert.alert-info
+            = flash[:notice]   
+        = yield

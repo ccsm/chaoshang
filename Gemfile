@@ -25,6 +25,7 @@ gem 'simple_form'
 gem 'devise' # For authentication
 gem 'rails-i18n' # For some out-of-the-box default locales
 
+gem 'gon'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
