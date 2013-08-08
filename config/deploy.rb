@@ -3,12 +3,6 @@ require 'mina/rails'
 require 'mina/git'
 require 'mina/rvm'    # for rvm support. (http://rvm.io)
 
-# Basic settings:
-#   domain       - The hostname to SSH to.
-#   deploy_to    - Path to deploy into.
-#   repository   - Git repo to clone from. (needed by mina/git)
-#   branch       - Branch name to deploy. (needed by mina/git)
-
 set :domain, '103.6.86.110'
 set :deploy_to, '/var/www/chaoshang'
 set :repository, 'git@github.com:ccsm/chaoshang.git'
@@ -17,7 +11,7 @@ set :rvm_path,'/usr/local/rvm'
 
 # Manually create these paths in shared/ (eg: shared/config/database.yml) in your server.
 # They will be linked in the 'deploy:link_shared_paths' step.
-set :shared_paths, ['config/database.yml', 'log']
+set :shared_paths, ['config/mongoid.yml', 'log','public/uploads']
 
 # Optional settings:
 set :user, 'root'    # Username in the server to SSH to.
@@ -33,7 +27,7 @@ task :environment do
   # invoke :'rbenv:load'
 
   # For those using RVM, use this to load an RVM version@gemset.
-  invoke :'rvm:use[ruby-1.9.3-p448@rails-3.2.12]'
+  #invoke :'rvm:use[ruby-1.9.3-p448@rails-3.2.12]'
 end
 
 # Put any custom mkdir's in here for when `mina setup` is ran.
@@ -51,9 +45,10 @@ task :setup => :environment do
  queue! %[sudo yum install libyaml-devel]
  queue! %[ yum install ImageMagick-devel]
  #安装rvm
- queue! %[bash < <(curl -s https://raw.github.com/wayneeseguin/rvm/master/binscripts/rvm-installer)]
- queue! %[echo '[[ -s "/usr/local/rvm/bin/rvm" ]] && . "/usr/local/rvm/bin/rvm"' >> ~/.bash_profile ]
- queue! %[source ~/.bash_profile]
+ queue! %[ curl -L get.rvm.io | bash -s stable ]
+ queue! %[ source ~/.bashrc ]
+ queue! %[ source ~/.bash_profile ]
+
  queue! %[rvm pkg install libyaml]
  queue! %[rvm install 1.9.3 --with-libyaml-dir=/usr/local/rvm/usr]
  queue! %[rvm alias create default 1.9.3]
@@ -81,21 +76,21 @@ task :setup => :environment do
  queue! %[ make ]
  # queue! %[ src/redis-server ] 
  #安装nginx
+ invoke :'rvm:use[2.0.0@rails-4.0.0]'
+
  queue! %[gem install passenger]
  queue! %[passenger-install-nginx-module]
  #生成SSH-KEY(第一次输入直接敲回车，第二次和第三次是输入密码及确定。这样就会在~/.ssh/下有id_rsa和id_rsa.pub两个文件出现)
  queue! %[ssh-keygen -t rsa -C "admin@kai.ba"]
  
-
-
  queue! %[mkdir -p "#{deploy_to}/shared/log"]
  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/log"]
 
  queue! %[mkdir -p "#{deploy_to}/shared/config"]
  queue! %[chmod g+rx,u+rwx "#{deploy_to}/shared/config"]
 
- queue! %[touch "#{deploy_to}/shared/config/database.yml"]
- queue  %[echo "-----> Be sure to edit 'shared/config/database.yml'."]
+ queue! %[touch "#{deploy_to}/shared/config/mongoid.yml"]
+ queue  %[echo "-----> Be sure to edit 'shared/config/mongoid.yml'."]
 end
 
 desc "boot database for mongo and redis"
@@ -104,10 +99,26 @@ task :bootdb do
  queue! %[cd /usr/local/mongodb/bin ]
  queue! %[./mongod -f mongodb.conf]
  #启动redis
- queue! %[cd /usr/local/redis ]
- queue! %[ src/redis-server ] 
-
+ #queue! %[cd /usr/local/redis ]
+ #queue! %[ src/redis-server ] 
+ #记得关闭terminal,而不是ctrl+C
 end
+
+desc "start nginx"
+task :start_nginx do
+  queue! %[cd /opt/nginx/sbin ]
+  queue! %[./nginx] 
+end
+
+
+desc "restart the server"
+task :reboot do
+  invoke :start_nginx
+  queue! %[cd /data/db ]
+  queue! %[rm mongdb.lock]
+  invoke :bootdb
+end
+
 
 desc "Deploys the current version to the server."
 task :deploy => :environment do
@@ -117,19 +128,30 @@ task :deploy => :environment do
     invoke :'git:clone'
     invoke :'deploy:link_shared_paths'
     invoke :'bundle:install'
-    
-    #invoke :'rails:assets_precompile'
-    #invoke :'rake db:mongoid:create_indexes RAILS_ENV=production'
-    #to :launch do
-     # queue "touch #{deploy_to}/tmp/restart.txt"
-    #end
+    invoke :'rails:assets_precompile'
+    queue! "#{rake} db:mongoid:create_indexes RAILS_ENV=production"
   end
 end
 
-# For help in making your deploy script, see the Mina documentation:
-#
-#  - http://nadarei.co/mina
-#  - http://nadarei.co/mina/tasks
-#  - http://nadarei.co/mina/settings
-#  - http://nadarei.co/mina/helpers
+task :restart => :environment do
+  queue """
+  if [ -d #{deploy_to}/current/tmp ]
+  then
+    touch #{deploy_to}/current/tmp/restart.txt 
+  else
+    mkdir #{deploy_to}/current/tmp
+    touch #{deploy_to}/current/tmp/restart.txt 
+  fi
+  chmod -R 777 #{deploy_to}/releases
+  """
+end
+
+task :console => :environment do
+  queue "cd #{deploy_to}/current && bundle exec rails c production"
+end 
+    
+task :cat_server_log => :environment do
+  queue "tail -f #{deploy_to}/current/log/staging.log"
+end
+
 
