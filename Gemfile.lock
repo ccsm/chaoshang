@@ -137,6 +137,8 @@ GEM
       mongoid (>= 3.0.1)
       rake
       rspec (>= 2.9)
+    mongoid-tree (1.0.3)
+      mongoid (>= 3.0, <= 4.0)
     mongoid_auto_increment_id (0.6.1)
       mongoid (>= 3.0.0, < 4.1.0)
     moped (1.5.0)
@@ -268,6 +270,7 @@ DEPENDENCIES
   mini_magick
   mongoid!
   mongoid-rspec
+  mongoid-tree
   mongoid_auto_increment_id (= 0.6.1)
   rack-mini-profiler
   rails (= 4.0.0)
