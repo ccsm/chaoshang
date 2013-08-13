@@ -1,19 +1,6 @@
 zh:
   navigation:
-    drivers: "司机管理"
-    passengers: "乘客管理"
-    partners: "合作伙伴"
-    stations: "地点"
-    jobs: "打车订单管理"
-    lines: "拼车线路管理"
-    schedules: "拼车时间表管理"
-    orders: "订单管理"
-    contracts: "运营管理"
-    versions: "版本管理"
-    coupons: "优惠劵管理"
-    payments: "支付记录"
-    feedbacks: "反馈"
-    documentation: "开发者专用"
+    dashboard/nodes: "节点管理"
   date:
     formats:
       default: "%Y-%m-%d"

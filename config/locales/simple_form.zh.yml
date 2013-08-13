@@ -10,10 +10,10 @@ zh:
     hints:
       admin:
         username: 'User name to sign in.'
-        password: 'No special characters, please.'
+        password: '请不要用特殊字符或者空格.'
     placeholders:
       admin:
-        username: 'Your username'
+        username: 'admin@ccsm.com.cn'
         password: '****'
     error_notification:
       default_message: "请注意下面的问题:"

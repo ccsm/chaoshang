@@ -1,0 +1,6 @@
+.well.sidebar-nav
+  %ul.nav.nav-list
+    %li.nav-header
+      Dashboard 
+    - if controller?("dashboard/nodes","dashboard/sections")
+      =submenu_link("模块列表", dashboard_nodes_path) 

@@ -1,5 +1,13 @@
 Chaoshang::Application.routes.draw do
   devise_for :admins
+
+
+  #后台管理界面
+  namespace :dashboard do
+   resources :nodes
+   resources :sections
+  end
+  root :to => "dashboard/nodes#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

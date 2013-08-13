@@ -2,7 +2,6 @@
 %html
   %head
     %title 超商网管理页面
-    %meta{:name=>"viewport",:content=>"width=device-width,initial-scale=1.0"}
     = stylesheet_link_tag "application", controller_name, :media=>"all"
     = javascript_include_tag "application", controller_name
     = include_gon
@@ -21,14 +20,14 @@
             %span.icon-bar
             %span.icon-bar
             %span.icon-bar
-          %a.brand 开8
+          %a.brand CCSM
           .nav-collapse.collapse
             %p.navbar-text.pull-right
-              =# link_to("退出",destroy_admin_user_session_path,:class=>"navbar-link",:method=>"DELETE")
-            =# render_menu_items('drivers', 'passengers', 'partners', 'feedbacks', 'stations', 'lines', 'orders', 'contracts', 'versions', 'payments', 'documentation')
+              = link_to("退出",destroy_admin_session_path,:class=>"navbar-link",:method=>"DELETE")
+            = render_menu_items('dashboard/nodes')
     .container-fluid
       .row-fluid
         .span2
-          =# render 'sidebar'
+          = render 'dashboard/application/sidebar'
         .span10
           = yield

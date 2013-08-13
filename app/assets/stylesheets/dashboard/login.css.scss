@@ -1,0 +1,32 @@
+.clr{clear:both;}
+#login {
+  color: #fff;                 
+  background: #222 url('/assets/bg-login.gif');
+}
+#login-wrapper {               
+  background: url('/assets/bg-login-top.png') top left repeat-x;
+  #login-top {
+        position:relative;     
+        width: 40%;
+        margin: 0px auto;               
+        padding: 140px 0 50px 0;        
+        text-align: center;    
+        IMG{
+          position:absolute;   
+          left:50px;
+          top:90px;            
+        }
+  }
+  #login-content {             
+        width: 500px;          
+        margin: 0 auto;        
+        label {                
+          color: #fff;         
+        }
+        .form-actions{         
+          background :transparent none;
+          border-top: none;
+        }
+  }
+}
+

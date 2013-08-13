@@ -20,7 +20,7 @@ gem 'coffee-rails', '~> 4.0.0'
 
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'haml-rails'
-gem 'simple_form'
+gem 'simple_form',"3.0.0.rc"
 
 gem 'devise' # For authentication
 gem 'rails-i18n' # For some out-of-the-box default locales
@@ -37,7 +37,7 @@ gem 'stringex', "~> 2.0.8"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
-
+gem 'jquery-ui-rails'
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 gem 'turbolinks'
 
@@ -51,6 +51,13 @@ gem 'kaminari'
 gem 'bootstrap-kaminari-views' 
 
 gem "mini_magick"
+
+gem 'active_hash'# 用于保存配置型(枚举)记录
+
+gem 'inherited_resources' # For refactoring of controllers
+
+gem 'anjlab-bootstrap-rails', '>= 2.3', :require => 'bootstrap-rails'
+
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
