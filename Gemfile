@@ -30,7 +30,10 @@ gem 'gon'
 # gem 'therubyracer', platforms: :ruby
 
 gem 'mongoid-tree', :require => 'mongoid/tree'
+gem 'mongoid-list'
 
+
+gem 'stringex', "~> 2.0.8"
 
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
