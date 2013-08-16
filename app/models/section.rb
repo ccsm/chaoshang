@@ -7,11 +7,11 @@ class Section
   field :url
   has_many :nodes, :dependent => :destroy
 
-  validates_presence_of :name,:linkparam
-  validates_uniqueness_of :name,:linkparam
+  validates_presence_of :name,:url
+  validates_uniqueness_of :name,:url
 
 
-  default_scope desc(:position)
+  default_scope asc(:position)
 
   after_save :update_cache_version
   after_destroy :update_cache_version
@@ -21,7 +21,15 @@ class Section
     CacheVersion.section_node_updated_at = Time.now.to_i
   end
 
-  def sorted_nodes
-    self.nodes.sorted
-  end
+  #def sorted_nodes
+  #  self.nodes.sorted
+  #end
+
+  def self.section_collection
+    Rails.cache.fetch("section:section_collection:#{CacheVersion.section_node_updated_at}") do
+      Section.all.collect { |s| [s.name,s.url,s.id] }
+    end
+  end  
+
+
 end

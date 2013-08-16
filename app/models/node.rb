@@ -2,7 +2,7 @@ class Node
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::BaseModel
-  include Mongoid::List
+  include Mongoid::Tree
  
   field :name
   field :summary
@@ -23,10 +23,9 @@ class Node
 
   def update_cache_version
     # 记录节点变更时间，用于清除缓存
-    CacheVersion.section_node_updated_at = Time.now
+    CacheVersion.section_node_updated_at = Time.now.to_i
   end
 
-  # 热门节点给 select 用的
   def self.node_collection
     Rails.cache.fetch("node:node_collection:#{CacheVersion.section_node_updated_at}") do
       Node.all.collect { |n| [n.name,n.id] }
