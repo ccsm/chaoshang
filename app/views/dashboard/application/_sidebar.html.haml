@@ -2,5 +2,10 @@
   %ul.nav.nav-list
     %li.nav-header
       Dashboard 
-    - if controller?("dashboard/nodes","dashboard/sections")
-      =submenu_link("模块列表", dashboard_nodes_path) 
+    - if controller?("dashboard/sections")
+      =submenu_link("模块列表", sections_path)
+      =submenu_link("新增模块", new_section_path)
+    - if controller?("dashboard/nodes")
+      =submenu_link("节点列表", nodes_path) 
+      =submenu_link("新增节点", new_node_path)
+

@@ -1,0 +1,23 @@
+%table.table.table-striped.table-hover
+  %thead
+    %tr
+      %th 模块名称
+      %th 位置
+      %th 节点数量
+      %th 是否显示
+      %th
+      %th
+      %th
+      %th
+      %th
+  %tbody
+    - @sections.each do |section|
+      %tr
+        %td= section.name
+        %td= section.position
+        %td
+        %td= section.ismenu ? "显示" : "不显示"
+        %td= link_to '显示', section_path(section)
+        %td= link_to '编辑', edit_section_path(section)
+        %td= link_to '删除', section_path(section), :confirm => '确定删除?', :method => :delete
+        %td= link_to('上',section_up_path(section))+"|"+link_to('下',section_down_path(section))

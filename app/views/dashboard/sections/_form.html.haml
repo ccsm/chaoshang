@@ -1,0 +1,11 @@
+= simple_form_for(@section,:html=>{:class=>'form-horizontal'} ) do |f|
+  = f.error_notification
+  .form-inputs
+    = f.input :name
+    = f.input :url
+    = f.input :ismenu, as: :radio_buttons 
+  .form-actions
+    = f.button :submit,:value=> if @section.new_record? then "创建模块信息" else "更新模块信息" end,:class=>"btn btn-large btn-primary "
+    &nbsp;&nbsp;
+    = link_to '返回',sections_path,:class=>"btn"
+

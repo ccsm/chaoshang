@@ -9,8 +9,8 @@ module NavigationHelper
   end
       
   def nav_link(controller_name)
-    content_tag :li, class: controller?(controller_name) ? 'active' : nil do
-      link_to "#{I18n.t controller_name, :scope => :navigation}", "dashboard/#{controller_name}"
+    content_tag :li, class: controller?(controller_name[1..-1]) ? 'active' : nil do
+      link_to "#{I18n.t controller_name, :scope => :navigation}", "#{controller_name}"
     end
   end
   

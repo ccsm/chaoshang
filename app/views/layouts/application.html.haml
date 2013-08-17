@@ -24,10 +24,10 @@
           .nav-collapse.collapse
             %p.navbar-text.pull-right
               = link_to("退出",destroy_admin_session_path,:class=>"navbar-link",:method=>"DELETE")
-            = render_menu_items('dashboard/nodes')
+            = render_menu_items('/dashboard/sections','/dashboard/nodes')
     .container-fluid
       .row-fluid
         .span2
-          = render 'dashboard/application/sidebar'
+          = render '/dashboard/application/sidebar'
         .span10
           = yield

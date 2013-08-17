@@ -3,10 +3,26 @@ Chaoshang::Application.routes.draw do
 
 
   #后台管理界面
-  namespace :dashboard do
-   resources :nodes
-   resources :sections
+  #namespace :dashboard do
+  # resources :nodes
+ #  resources :sections
+ # end
+  scope '/dashboard' do
+   resources :nodes,module:'dashboard'
+   resources :sections,module:'dashboard' do
+     get "/up" => "sections#moveup"
+     get "/down" => "sections#movedown"
+   end
+   
   end
+
+  #scope module: 'dashboard' do
+  # resources :nodes
+  # resources :sections
+
+
+  #end
+
   root :to => "dashboard/nodes#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

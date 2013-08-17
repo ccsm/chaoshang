@@ -5,13 +5,17 @@ class Section
   include Mongoid::List
   field :name
   field :url
+  field :ismenu, :type => Mongoid::Boolean,default:true
+  #field :available, type:Boolean,default:true
   has_many :nodes, :dependent => :destroy
 
-  validates_presence_of :name,:url
-  validates_uniqueness_of :name,:url
+  validates_presence_of :name
+  validates_uniqueness_of :name
 
 
   default_scope asc(:position)
+  scope :menus, -> { where(:ismenu => true).asc(:position) }
+
 
   after_save :update_cache_version
   after_destroy :update_cache_version
@@ -25,9 +29,9 @@ class Section
   #  self.nodes.sorted
   #end
 
-  def self.section_collection
+  def self.menu_collection
     Rails.cache.fetch("section:section_collection:#{CacheVersion.section_node_updated_at}") do
-      Section.all.collect { |s| [s.name,s.url,s.id] }
+      Section.menus.collect { |s| [s.name,s.url,s.id] }
     end
   end  
 
