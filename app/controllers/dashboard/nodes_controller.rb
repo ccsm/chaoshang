@@ -1,6 +1,7 @@
 class Dashboard::NodesController < Dashboard::DashboardController  
   def index
-    @nodes = Node.all
+    @sections = Section.all
+    params[:active] ||= @sections.first.id.to_s
 
   end
 end

@@ -2,6 +2,7 @@
   %thead
     %tr
       %th 模块名称
+      %th URL名称
       %th 位置
       %th 节点数量
       %th 是否显示
@@ -14,6 +15,7 @@
     - @sections.each do |section|
       %tr
         %td= section.name
+        %td= section.url
         %td= section.position
         %td
         %td= section.ismenu ? "显示" : "不显示"

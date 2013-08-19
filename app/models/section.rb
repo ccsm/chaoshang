@@ -9,8 +9,8 @@ class Section
   #field :available, type:Boolean,default:true
   has_many :nodes, :dependent => :destroy
 
-  validates_presence_of :name
-  validates_uniqueness_of :name
+  validates_presence_of :name,:url
+  validates_uniqueness_of :name,:url
 
 
   default_scope asc(:position)
