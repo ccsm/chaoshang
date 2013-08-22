@@ -14,7 +14,7 @@
             .span3
               %ul{:id=>"#{section.url}_tree",:class=>"ztree",:style=>"width:95%; overflow:auto;"}
             .span9 
-              = section.name
+              = render "form"
 :javascript
   var zTree;
   var demoIframe;

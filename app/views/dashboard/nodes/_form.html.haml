@@ -1,0 +1,13 @@
+= simple_form_for(@node,:html=>{:class=>'form-horizontal'}) do |f|
+  = f.error_notification
+  .form-inputs 
+    = f.input :name
+    = f.input :summary,as: :text           
+    .control-group.select      
+      %label.select.control-label 父部门
+      .controls                
+        =#raw parent_category_selects(@category.id,'categoryUL0')
+    =f.input :parent_id,:as=>"hidden"
+  .form-actions                
+    = f.button :submit         
+
