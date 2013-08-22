@@ -2,20 +2,37 @@
 = javascript_include_tag "lib/jquery.ztree.core-3.5.min"
 
 .row-fluid
-  .span12 
-    %ul.nav.nav-tabs
-      - @sections.each do |section| 
-        %li{:class=>if params[:active] == section.id.to_s then "active"  end }
-          =link_to section.name, "##{section.url}", {"data-toggle" => "tab"}
-    .tab-content
-      - @sections.each do |section| 
-        .tab-pane{:class=>if params[:active] == section.id.to_s then "active"  end,:id=>section.url}
-          .row-fluid
-            .span3
-              %ul{:id=>"#{section.url}_tree",:class=>"ztree",:style=>"width:95%; overflow:auto;"}
-            .span9 
-              = render "form"
+  .span12
+    .navbar#section_nav
+      .navbar-inner
+        %ul.nav
+          - @sections.each do |section| 
+            %li{:class=>if params[:active] == section.id.to_s then "active"  end }
+              =link_to section.name, "#section_#{section.id}", {"data-toggle" => "tab"}
+    .row-fluid
+      .span3
+        .tab-content
+          - @sections.each do |section| 
+            .tab-pane{:class=>if params[:active] == section.id.to_s then "active"  end,:id=>"section_#{section.id}"}
+              %ul{:id=>"#{section.id}_tree",:class=>"ztree",:style=>"width:95%; overflow:auto;"}
+      .span9
+        %ul.nav.nav-tabs
+          %li.active
+            =link_to "基本信息", "#node_base",{"data-toggle" => "tab"}
+        .tab-content
+          .tab-pane{:class=>"active",:id=>"node_base"}      
+            - unless notice.nil?
+              %p
+                .alert.alert-success#notice= notice
+            = render "form"
 :javascript
+  //设置form的section.id
+  $("#node_section_id").val("#{params[:active]}")
+  $('#section_nav a[data-toggle="tab"]').on('shown', function (e) {
+    section_id = e.target.toString().split('#')[1].split("_")[1]
+    $("#node_section_id").val(section_id)
+  })
+  
   var zTree;
   var demoIframe;
 
@@ -26,14 +43,24 @@
       selectedMulti: false
     },
     data: {
+      keep:{
+       leaf:true
+      },
       simpleData: {
         enable:true,
         idKey: "id",
         pIdKey: "pId",
         rootPId: ""
       }
-    }
+    },
+    callback:{
+      onClick:function(event, treeId, treeNode) {
+         // alert(treeNode.tId + ", " + treeNode.name);
+        //alert($("#node_section_id").val())        
+      }
+     }
   };
+  var zsnodes= eval('('+gon.nodes+')')
 
   var zNodes =[
     {id:1, pId:0, name:"[core] 基本功能 演示", open:true},
@@ -101,12 +128,16 @@
     {id:602, pId:6, name:"配合 checkbox 的隐藏", file:"exhide/checkbox"},
     {id:603, pId:6, name:"配合 radio 的隐藏", file:"exhide/radio"}
   ];
-
   $(document).ready(function(){
-    var t = $("#index_tree");
-    t = $.fn.zTree.init(t, setting, zNodes);
-    var zTree = $.fn.zTree.getZTreeObj("tree");
-    zTree.selectNode(zTree.getNodeByParam("id", 101));
+    var t1 = $("#1_tree");
+    t1 = $.fn.zTree.init(t1, setting, zsnodes["s_1"]);
+    var t2 = $("#2_tree");
+    t2 = $.fn.zTree.init(t2, setting, zsnodes["s_2"]);
+    var t3 = $("#3_tree");
+    t3 = $.fn.zTree.init(t3, setting, zsnodes["s_3"]);
+
+    //var zTree = $.fn.zTree.getZTreeObj("tree");
+    //zTree.selectNode(zTree.getNodeByParam("id", 101));
 
   }); 
  

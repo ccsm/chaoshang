@@ -1,2 +1,3 @@
 module Dashboard::NodesHelper
+
 end

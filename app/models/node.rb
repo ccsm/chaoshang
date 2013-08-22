@@ -6,9 +6,8 @@ class Node
  
   field :name
   field :summary
-  field :articles_count, :type => Integer, :default => 0
 
-  has_many :articles
+  #has_many :articles
   belongs_to :section
 
   index :section_id => 1
