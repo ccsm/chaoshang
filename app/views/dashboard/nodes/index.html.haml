@@ -14,28 +14,19 @@
         .tab-content
           - @sections.each do |section| 
             .tab-pane{:class=>if params[:active] == section.id.to_s then "active"  end,:id=>"section_#{section.id}"}
-              %ul{:id=>"#{section.id}_tree",:class=>"ztree",:style=>"width:95%; overflow:auto;"}
+              %ul{:id=>"s_#{section.id}_tree",:class=>"ztree",:style=>"width:95%; overflow:auto;"}
           #rMenu
             %ul.unstyled
-              %li#m_add{:onclick=>"addTreeNode()"}增加节点
+              %li#m_add{:onclick=>"addTreeNode()"}创建子节点
       .span9
-        %ul.nav.nav-tabs
-          %li.active
-            =link_to "基本信息", "#node_base",{"data-toggle" => "tab"}
-        .tab-content
-          .tab-pane{:class=>"active",:id=>"node_base"}      
-            - unless notice.nil?
-              %p
-                .alert.alert-success#notice= notice
-            = render "form"
+        %iframe{:id=>"nodeIframe",:frameborder=>0,:scrolling=>"auto",:width=>"100%",:height=>"600px",:src=>"#{new_node_path}"}
 :javascript
   //设置form的section.id
-  $("#node_section_id").val("#{params[:active]}")
+  var section_id = "#{params[:active]}" 
   $('#section_nav a[data-toggle="tab"]').on('shown', function (e) {
     section_id = e.target.toString().split('#')[1].split("_")[1]
-    $("#node_section_id").val(section_id)
   })
-  
+   
   var zTree;
   var demoIframe;
 
@@ -49,54 +40,48 @@
       simpleData: {
         enable:true,
         idKey: "id",
-        pIdKey: "pId",
+        pIdKey: "pid",
         rootPId: ""
       }
     },
     callback:{
       onClick:function(event, treeId, treeNode) {
-         // alert(treeNode.tId + ", " + treeNode.name);
-        //alert($("#node_section_id").val())        
+         $("#nodeIframe").attr("src","#{nodes_path}"+"/"+treeNode.id+"/edit") 
       },
       onRightClick: OnRightClick
      }
   };
   var zsnodes= eval('('+gon.nodes+')')
+  
+
 
     //$(document).ready(function(){
-    var t1 = $("#1_tree");
-    t1 = $.fn.zTree.init(t1, setting, zsnodes["s_1"]);
-    var t2 = $("#2_tree");
-    t2 = $.fn.zTree.init(t2, setting, zsnodes["s_2"]);
-    var t3 = $("#3_tree");
-    t3 = $.fn.zTree.init(t3, setting, zsnodes["s_3"]);
-
-    //var zTree = $.fn.zTree.getZTreeObj("tree");
-    //zTree.selectNode(zTree.getNodeByParam("id", 101));
-
-  //});
+       for(var section in zsnodes)
+       {
+         eval('var t_'+section+' = $("#'+section+'_tree")')
+         eval('t_'+section+' = $.fn.zTree.init(t_'+section+', setting, zsnodes["'+section+'"]);')
+       }
+    //});
   //创建右键菜单
   function OnRightClick(event, treeId, treeNode) {
-    //alert(1)
       if (!treeNode && event.target.tagName.toLowerCase() != "button" && $(event.target).parents("a").length == 0) {
-       alert(1)
-        //zTree.cancelSelectedNode();
+       var zTree = $.fn.zTree.getZTreeObj(treeId);
+        zTree.cancelSelectedNode();
         //showRMenu("root", event.clientX, event.clientY);
       } else if (treeNode && !treeNode.noR) {
-        t3.selectNode(treeNode);
+        var zTree = $.fn.zTree.getZTreeObj(treeId);
+        zTree.selectNode(treeNode);
         showRMenu("node", event.clientX, event.clientY);
       }
    }
 
     function showRMenu(type, x, y) {
-      //$("#rMenu").css({"visibility":"visible"})//show();
-      //$("#m_add").show();
       $("#rMenu").css({"top":y+"px", "left":x+"px", "visibility":"visible"});
 
       $("body").bind("mousedown", onBodyMouseDown);
     }
     function hideRMenu() {
-      if (rMenu) rMenu.css({"visibility": "hidden"});
+      if ($("#rMenu")) $("#rMenu").css({"visibility": "hidden"});
       $("body").unbind("mousedown", onBodyMouseDown);
     }
     function onBodyMouseDown(event){
@@ -106,7 +91,11 @@
     }
     function addTreeNode() {
       hideRMenu();
-      alert("add Node")
+      current_treeId = "s_"+section_id+"_tree"
+      current_tree = $.fn.zTree.getZTreeObj(current_treeId);
+      selected_node = current_tree.getSelectedNodes()[0]
+      selected_nodeId = selected_node.id
+      $("#nodeIframe").attr("src","#{new_node_path}"+"?parent_id="+selected_nodeId+"&section_id="+section_id) 
     }
     
  

@@ -1,10 +1,20 @@
-= simple_form_for(@node,:html=>{:class=>'form-horizontal'}) do |f|
-  = f.error_notification
-  .form-inputs 
-    = f.input :name
-    = f.input :summary,as: :text
-    = f.input :parent_id,as: :hidden
-    = f.input :section_id,as: :hidden
-  .form-actions                
-    = f.button :submit         
+%ul.nav.nav-tabs
+  %li.active
+    =link_to "基本信息", "#node_base",{"data-toggle" => "tab"}
+.tab-content
+  .tab-pane{:class=>"active",:id=>"node_base"}      
+    - unless notice.nil?
+      %p
+        .alert.alert-success#notice= notice
+    = simple_form_for(@node,:html=>{:class=>'form-horizontal'}) do |f|
+      = f.error_notification
+      .form-inputs 
+        = f.input :name
+        = f.input :summary,as: :text
+        - unless @node.parent_id.nil?
+          = f.label "父节点" #,@node.parent_name
+        = f.input :parent_id,as: :hidden
+        = f.input :section_id,as: :hidden
+      .form-actions                
+        = f.button :submit         
 

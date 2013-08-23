@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
     def layout_by_resource
       return "welcome" if controller_name=="sessions"
       return "blank" if action_name.end_with?("_ajax")
+      return "blank" if controller_name=="nodes" && ["new","edit"].include?(action_name)
       "application"
     end
 

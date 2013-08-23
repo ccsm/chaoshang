@@ -2,7 +2,6 @@ class Dashboard::NodesController < Dashboard::DashboardController
   def index
     @sections = Section.all
     params[:active] ||= @sections.first.id.to_s
-    @node = Node.new
     @section_nodes = Hash.new
     Section.all.each do |section|
        @section_nodes["s_"+section.id.to_s]=Array.new
@@ -11,8 +10,22 @@ class Dashboard::NodesController < Dashboard::DashboardController
        end
     end   
     gon.nodes = @section_nodes.to_json      
+ end
 
-  end
+ def new
+    @node = Node.new
+    @node.section_id = params[:section_id].to_i
+    @node.parent_id = params[:parent_id].to_i unless params[:parent_id].nil?
+    
+ end
+
+ def edit
+   @node = Node.find params[:id]
+
+ end
+
+
+
 
  def create
     @node = Node.new(node_params)

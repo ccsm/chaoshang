@@ -69,6 +69,7 @@ end
 
 # Set up testing environment
 group :test, :development do
+  gem 'fabrication'
   gem "rspec-rails" # Testing framework
   gem 'rb-inotify', :require => false # For guard automated tests
   gem 'rb-fsevent', :require => false # For guard automated tests
@@ -81,7 +82,6 @@ group :test do
   gem 'simplecov', '>=0.3.8', :require => false # Detecting code smells
   gem 'database_cleaner'
   gem 'launchy'
-  gem 'fabrication' # Fixture replacement
   #gem "factory_girl_rails" # Fixture replacement
   gem "capybara" # Better integration testing
   gem "guard-rspec" # For automated tests

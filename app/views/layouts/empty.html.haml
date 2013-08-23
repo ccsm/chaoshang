@@ -1,0 +1,29 @@
+!!!
+%html
+  %head
+    %title 超商网管理页面
+    = stylesheet_link_tag "application", "dashboard/"+controller_name, :media=>"all"
+    = javascript_include_tag "application", controller_name
+    = include_gon
+    = csrf_meta_tags
+    :sass
+      body
+        padding-top: 60px
+        padding-bottom: 40px
+      .sidebar-nav
+        padding: 9px 0px
+  %body
+    .navbar.navbar-inverse.navbar-fixed-top
+      .navbar-inner
+        .container-fluid
+          %button{:type=>"button",:class=>"btn btn-navbar","data-toggle"=>"collapse","data-target"=>".nav-collapse"}
+            %span.icon-bar
+            %span.icon-bar
+            %span.icon-bar
+          %a.brand CCSM
+          .nav-collapse.collapse
+            %p.navbar-text.pull-right
+              = link_to("退出",destroy_admin_session_path,:class=>"navbar-link",:method=>"DELETE")
+            = render_menu_items('/dashboard/sections','/dashboard/nodes')
+    .container-fluid
+      = yield
