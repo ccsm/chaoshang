@@ -12,9 +12,15 @@
         = f.input :name
         = f.input :summary,as: :text
         - unless @node.parent_id.nil?
-          = f.label "父节点" #,@node.parent_name
+          .control-group
+            %label{:class=>"control-label"} 父节点
+            .controls
+              %label
+                = @node.parent_name
         = f.input :parent_id,as: :hidden
         = f.input :section_id,as: :hidden
       .form-actions                
-        = f.button :submit         
-
+        = f.button :submit       
+        - unless @node.new_record?
+          = link_to '删除', @node, :confirm => '确定删除节点?', :method => :delete
+         

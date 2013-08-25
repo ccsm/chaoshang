@@ -6,7 +6,7 @@ class Dashboard::NodesController < Dashboard::DashboardController
     Section.all.each do |section|
        @section_nodes["s_"+section.id.to_s]=Array.new
        section.nodes.all.each do |node|
-          @section_nodes["s_"+section.id.to_s]<<{:name=>node.name,:id=>node.id,:pid=>node.parent_id||=0}
+          @section_nodes["s_"+section.id.to_s]<<{:name=>node.name,:id=>node.id,:pid=>node.parent_id||=0,:isParent=>true}
        end
     end   
     gon.nodes = @section_nodes.to_json      
@@ -21,18 +21,24 @@ class Dashboard::NodesController < Dashboard::DashboardController
 
  def edit
    @node = Node.find params[:id]
-
  end
 
+ def destroy
+    @node = Node.find(params[:id])
+    @node.destroy
+    render text: "<script>parent.refresh();</script>"
+ end
 
 
 
  def create
     @node = Node.new(node_params)
     if @node.save!
-      redirect_to nodes_path+"?active=#{@node.section_id}", notice: '节点创建成功。'
+      #redirect_to nodes_path+"?active=#{@node.section_id}", notice: '节点创建成功。'
+      render text: "<script>parent.refresh();</script>"
     else
-      redirect_to nodes_path+"?active=#{params[:node][:section_id]}", notice: '节点创建失败。'
+      #redirect_to nodes_path+"?active=#{params[:node][:section_id]}", notice: '节点创建失败。'
+      render text: "<script>parent.refresh();</script>"
     end
   end
  

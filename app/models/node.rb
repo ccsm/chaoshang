@@ -12,7 +12,7 @@ class Node
 
   index :section_id => 1
 
-  validates_presence_of :name, :summary, :section
+  validates_presence_of :name,:section
   validates_uniqueness_of :name
 
   scope :hots, desc(:articles_count)
