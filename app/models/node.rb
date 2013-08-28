@@ -3,11 +3,13 @@ class Node
   include Mongoid::Timestamps
   include Mongoid::BaseModel
   include Mongoid::Tree
+  include Mongoid::Tree::Ordering
+  include Mongoid::Tree::Traversal
+
  
   field :name
   field :summary
-
-  #has_many :articles
+  has_many :articles,inverse_of: :node
   belongs_to :section
 
   index :section_id => 1
@@ -25,6 +27,17 @@ class Node
    @p.name
   end
 
+  def traverse_to_list
+    node_options = Array.new
+    self.traverse(:breadth_first) do |n|
+     node_names = Array.new
+     n.ancestors_and_self.each do |node|
+       node_names << node.name 
+     end
+     node_options << [self.section.name+">>"+node_names.join(">>"),n.id]
+    end
+    node_options
+  end
 
   def update_cache_version
     # 记录节点变更时间，用于清除缓存

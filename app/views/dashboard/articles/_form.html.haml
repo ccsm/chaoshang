@@ -1,0 +1,28 @@
+%ul.nav.nav-tabs
+  %li.active
+    =link_to "基本信息", "#article_base",{"data-toggle" => "tab"}
+.tab-content
+  .tab-pane{:class=>"active",:id=>"article_base"}    
+    = simple_form_for(@article,:html=>{:class=>'form-horizontal'}) do |f|
+      = f.error_notification
+      .row_fluid
+        .span8
+          .form-inputs
+            = f.input :node_id,collection:@nodes.flatten(1)
+            = f.input :title
+            = f.simple_fields_for :article_body do |body_fields|
+              = body_fields.input :body,as: :kindeditor, :input_html => { :height => 300 }
+          .form-actions
+            = f.button :submit
+        .span4
+          .form-inputs
+            %fieldset
+              %legend
+                显示设置
+            = f.input :short_title
+            = f.input :introduction,as: :text
+            = f.input :author
+            = f.input :source
+            = f.input :section_top
+            = f.input :node_top
+         

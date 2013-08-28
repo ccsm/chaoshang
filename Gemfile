@@ -21,6 +21,8 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails',github: 'milgner/compass-rails', branch: 'rails4'
 
 
+gem 'rails_kindeditor','~> 0.4.0'
+
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'haml-rails'
 gem 'simple_form',"3.0.0.rc"

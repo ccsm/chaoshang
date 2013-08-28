@@ -2,6 +2,7 @@ zh:
   navigation:
     /dashboard/sections: "模块管理"
     /dashboard/nodes: "节点管理"
+    /dashboard/articles: "文章管理"
   date:
     formats:
       default: "%Y-%m-%d"

@@ -1,6 +1,7 @@
 //= require turbolinks
 //= require jquery              
 //= require jquery_ujs
+//= require kindeditor
 //= require common                                     
 
 // Include all twitter's javascripts                   

@@ -1,4 +1,5 @@
 Chaoshang::Application.routes.draw do
+ 
   devise_for :admins
 
 
@@ -13,16 +14,10 @@ Chaoshang::Application.routes.draw do
      get "/up" => "sections#moveup"
      get "/down" => "sections#movedown"
    end
-   
+   resources :articles,module:'dashboard'   
   end
 
-  #scope module: 'dashboard' do
-  # resources :nodes
-  # resources :sections
-
-
-  #end
-
+  
   root :to => "dashboard/nodes#index"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

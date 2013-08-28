@@ -24,7 +24,7 @@
           .nav-collapse.collapse
             %p.navbar-text.pull-right
               = link_to("退出",destroy_admin_session_path,:class=>"navbar-link",:method=>"DELETE")
-            = render_menu_items('/dashboard/sections','/dashboard/nodes')
+            = render_menu_items('/dashboard/sections','/dashboard/nodes','/dashboard/articles')
     .container-fluid
       .row-fluid
         .span2

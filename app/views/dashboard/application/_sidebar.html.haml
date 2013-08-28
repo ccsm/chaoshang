@@ -7,4 +7,6 @@
       =submenu_link("新增模块", new_section_path)
     - if controller?("dashboard/nodes")
       =submenu_link("节点列表", nodes_path) 
-
+    - if controller?("dashboard/articles")
+      =submenu_link("文章列表",articles_path)
+      =submenu_link("新增文章",new_article_path)

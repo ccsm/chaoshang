@@ -25,9 +25,15 @@ class Section
     CacheVersion.section_node_updated_at = Time.now.to_i
   end
 
-  #def sorted_nodes
-  #  self.nodes.sorted
-  #end
+  def nodes_list
+   nodes = Array.new
+   self.nodes.roots.each do |node|
+    nodes << node.traverse_to_list 
+   end
+   nodes.flatten(1)
+  end
+
+
 
   def self.menu_collection
     Rails.cache.fetch("section:section_collection:#{CacheVersion.section_node_updated_at}") do
