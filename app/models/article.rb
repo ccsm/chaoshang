@@ -3,12 +3,14 @@ class Article
   include Mongoid::Timestamps
   include Mongoid::BaseModel
   include Mongoid::List
+
+  has_one :guide_image
   
   belongs_to :node,inverse_of: :articles
   
   has_one :article_body, :dependent => :destroy
 
-  accepts_nested_attributes_for :article_body
+  accepts_nested_attributes_for :article_body,:guide_image
 
   delegate :body,:formatted_body, :to => :article_body
 

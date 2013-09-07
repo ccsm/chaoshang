@@ -1,6 +1,9 @@
 %ul.nav.nav-tabs
   %li.active
     =link_to "基本信息", "#article_base",{"data-toggle" => "tab"}
+  - unless @article.new_record?
+    %li
+      =link_to "关联图片", "#article_photo",{"data-toggle" => "tab"}
 .tab-content
   .tab-pane{:class=>"active",:id=>"article_base"}    
     = simple_form_for(@article,:html=>{:class=>'form-horizontal'}) do |f|
@@ -25,4 +28,54 @@
             = f.input :source
             = f.input :section_top
             = f.input :node_top
-         
+  - unless @article.new_record?      
+    = stylesheet_link_tag "imgareaselect-default.css" 
+    = javascript_include_tag "lib/jquery.imgareaselect.pack.js" 
+    .tab-pane{:id=>"article_photo"}   
+      .row_fluid
+        .span5
+          - if @article.guide_image.image.present?
+            .well
+              = image_tag @article.guide_image.image_url(:guide_view),:id=>"guide_image"
+            %fieldset
+              %legend
+                选择区域
+              = label_tag "","宽度",:id=>:owith
+              = label_tag "","高度",:id=>:oheight
+              = form_for(@article,:builder => ImageCropFormBuilder) do |f|
+                = f.image_crop_hidden :guide_crop
+                = f.button :submit
+
+        .span7
+          = simple_form_for(@article,:html=>{:class=>'form-horizontal'}) do |f|
+            = f.error_notification
+            .form-inputs
+              = f.simple_fields_for :guide_image do |p|
+                = p.input :image,as: :file
+            .form-actions
+              = f.button :submit
+          %table.table.table-striped.table-hover
+            %thead
+              %tr
+                %th 图片尺寸
+                %th 图片
+                %th
+            %tbody
+              %tr
+                %td 210*150 
+                %td= image_tag @article.guide_image.image.url(:guide)
+                %td
+                  
+    :javascript
+      $('img#guide_image').imgAreaSelect({
+        handles: true, aspectRatio: '210:150',
+        onSelectEnd:function (img, selection) {
+           $("#owith").text("宽度 "+selection.width)
+           $("#oheight").text("长度 "+selection.height)
+           $("#article_guide_image_attributes_guide_crop_x").val(selection.x1)
+           $("#article_guide_image_attributes_guide_crop_y").val(selection.y1)
+           $("#article_guide_image_attributes_guide_crop_w").val(selection.width)
+           $("#article_guide_image_attributes_guide_crop_h").val(selection.height)
+        }
+      });   
+

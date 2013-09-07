@@ -22,7 +22,7 @@ class Dashboard::SectionsController < Dashboard::DashboardController
 
   def edit
     @section = Section.find(params[:id])
-
+  
   end
 
 

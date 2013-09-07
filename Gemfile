@@ -2,8 +2,11 @@ source 'http://ruby.taobao.org'
 
 gem 'rails', '4.0.0'
 # Mongoid 辅助插件
+#gem 'mongo'
 gem "mongoid", github: 'mongoid/mongoid', ref: '11e45e5a30a45458b83db99ab6c9d9ccc337e66f'
 gem 'mongoid_auto_increment_id', "0.6.1"
+
+
 gem 'execjs'
 gem 'therubyracer', :platforms => :ruby
 
@@ -21,7 +24,7 @@ gem 'coffee-rails', '~> 4.0.0'
 gem 'compass-rails',github: 'milgner/compass-rails', branch: 'rails4'
 
 
-gem 'rails_kindeditor','~> 0.4.0'
+gem 'rails_kindeditor','~> 0.4.0'#, :path => "vendor/gems/rails_kindeditor"
 
 gem 'active_hash' # 用于保存配置型(枚举)记录
 gem 'haml-rails'
@@ -49,8 +52,11 @@ gem 'turbolinks'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.2'
 
-gem "carrierwave", "~> 0.6.2"   
-gem 'carrierwave-mongoid', :require => 'carrierwave/mongoid'
+gem "carrierwave"   
+gem "carrierwave-mongoid", git: "git://github.com/jnicklas/carrierwave-mongoid.git"
+gem 'mongoid-grid_fs', github: 'ahoward/mongoid-grid_fs'
+
+
 #paging
 gem 'kaminari'                 
 gem 'bootstrap-kaminari-views' 

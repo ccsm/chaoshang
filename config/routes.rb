@@ -14,7 +14,9 @@ Chaoshang::Application.routes.draw do
      get "/up" => "sections#moveup"
      get "/down" => "sections#movedown"
    end
-   resources :articles,module:'dashboard'   
+   resources :articles,module:'dashboard' do
+     resources :pictures,module:'dashboard'
+   end  
   end
 
   
