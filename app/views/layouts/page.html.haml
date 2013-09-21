@@ -1,0 +1,61 @@
+!!!
+%html
+  %head
+    %title 超商网
+    = stylesheet_link_tag "page/index", :media=>"all"
+
+  %body
+    .head#head
+      .header
+        .top
+          .right#topnav_right
+            %span#login
+              = link_to "用户登录","",:class=>"login"
+              = link_to "快速注册","",:class=>"login"
+            = link_to "","",:rel=>"nofollow",:target=>"_blank",:class=>"tsn",:title=>"新浪微博"
+            = link_to "","",:rel=>"nofollow",:target=>"_blank",:class=>"tqt",:title=>"腾讯微博"
+            = link_to "","",:target=>"_blank",:class=>"twx",:title=>"微信"
+            = link_to "","",:rel=>"nofollow",:target=>"_blank",:class=>"tmail",:title=>"订阅"
+      .main
+        .logo
+          = link_to(image_tag("/assets/logo.gif" ,:alt=>"超商网"),"http://www.ccsm.com.cn")
+        .banner
+      .headmenu
+        %ul.mainmenu
+          %li.off
+            = link_to "首页"
+          %li.off
+            = link_to "杂志"
+          %li
+            = link_to "高层访谈"
+          %li
+            = link_to "零售观察"
+          %li
+            = link_to "主题活动"
+          %li.off
+            = link_to "商务合作"
+          %li.off
+            = link_to "生活方式"
+     
+    
+
+
+
+
+
+
+
+    .copyright
+      .main
+        %span.fright
+          = link_to "广告服务"
+          = link_to "会员服务"
+          = link_to "在线投稿"
+          = link_to "意见反馈"
+          = link_to "联系我们"
+          = link_to "链接申请"
+        %span
+          ©2012-2013  
+          =link_to "北京聚合联佳咨询有限公司"
+          &nbsp;京ICP备12000166号
+          %br

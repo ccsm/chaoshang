@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
       return "welcome" if controller_name=="sessions"
       return "blank" if action_name.end_with?("_ajax")
       return "blank" if controller_name=="nodes" && ["new","edit"].include?(action_name)
+      return "page" if ["index"].include? controller_name
       "application"
     end
 

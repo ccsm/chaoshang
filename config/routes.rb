@@ -19,6 +19,8 @@ Chaoshang::Application.routes.draw do
    end  
   end
 
+
+  get "/index"=>"page/index#index"
   
   root :to => "dashboard/nodes#index"
   # The priority is based upon order of creation: first created -> highest priority.

@@ -3,6 +3,7 @@ class Article
   include Mongoid::Timestamps
   include Mongoid::BaseModel
   include Mongoid::List
+  include Mongoid::Taggable
 
   has_one :guide_image
   

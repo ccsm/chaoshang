@@ -183,6 +183,9 @@ GEM
       mongoid (>= 3.0, <= 4.0)
     mongoid_auto_increment_id (0.6.1)
       mongoid (>= 3.0.0, < 4.1.0)
+    mongoid_taggable (1.1.1)
+      mongoid (>= 3)
+      rake
     moped (1.5.1)
     multi_json (1.7.9)
     nokogiri (1.6.0)
@@ -328,6 +331,7 @@ DEPENDENCIES
   mongoid-rspec
   mongoid-tree
   mongoid_auto_increment_id (= 0.6.1)
+  mongoid_taggable
   rack-mini-profiler
   rails (= 4.0.0)
   rails-i18n

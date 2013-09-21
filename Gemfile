@@ -70,6 +70,8 @@ gem 'inherited_resources' # For refactoring of controllers
 gem 'anjlab-bootstrap-rails', '>= 2.3', :require => 'bootstrap-rails'
 
 
+gem 'mongoid_taggable'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

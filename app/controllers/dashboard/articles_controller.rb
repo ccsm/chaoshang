@@ -54,7 +54,7 @@ class Dashboard::ArticlesController < Dashboard::DashboardController
 
   private
     def article_params
-      params.require(:article).permit(:node_id,:title, :short_title,:introduction,:author,:source,:published,:status,:section_top,:node_top,article_body_attributes:[:article_id,:body],guide_image_attributes:[:article_id,:image,:crop_x,:crop_y,:crop_w,:crop_h,:guide_crop_x,:guide_crop_y,:guide_crop_w,:guide_crop_h,:cover_crop_x,:cover_crop_y,:cover_crop_w,:cover_crop_h])
+      params.require(:article).permit(:node_id,:title, :short_title,:introduction,:author,:source,:published,:status,:section_top,:node_top,:tags,article_body_attributes:[:article_id,:body],guide_image_attributes:[:article_id,:image,:guide_crop_x,:guide_crop_y,:guide_crop_w,:guide_crop_h])
     end
 
 end
